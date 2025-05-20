@@ -1,0 +1,88 @@
+
+
+/*  */
+a.btn.btn-secondary.mt-3{
+    margin-top: 0rem !important;
+}
+
+nav.navbar.navbar-expand-lg.navbar-dark{
+    top: -24px !important;
+}
+
+div.container-fluid{
+    top: -22px;
+    position: relative;
+}
+
+
+form div {
+    margin-bottom: 10px;
+}
+
+input {
+    padding: 5px;
+    margin: 5px;
+}
+
+button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+    /* Page size for printing */
+    @page {
+        size: legal landscape; /* Legal size in landscape orientation */
+        margin: 20mm;
+    }
+
+    /* Apply styles for printing */
+    @media print {
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            margin: 0;
+        }
+
+        /* Hide all elements that shouldn't be printed */
+        .container, .btn, .container a, .text-center, .d-flex, .modal, .modal-header, .modal-body, .modal-footer {
+            display: none;
+        }
+
+        /* Ensure only table is visible */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            page-break-before: always; /* Force a page break before the table */
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #f2f2f2;
+        }
+
+        tfoot {
+            page-break-after: always;
+        }
+
+        /* Hide background elements */
+        body {
+            background: none;
+        }
+
+        /* Pagination (force page breaks after each table) */
+        .page-break {
+            page-break-before: always;
+        }
+    }

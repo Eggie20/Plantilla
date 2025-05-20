@@ -1,0 +1,428 @@
+/**
+ * Main function to initiate the NOSA printing process
+ * Validates the form and directly prints without confirmation
+ */
+function printNOSA() {
+    console.log("printNOSA function called");
+    
+    try {
+        // Validate all required fields first
+        if (!validateNOSAForm()) {
+            return; // Validation failed, exit function
+        }
+        
+        // Skip confirmation and directly generate and print NOSA
+        generateAndPrintNOSA();
+    } catch (error) {
+        console.error("Error preparing NOSA print:", error);
+        // Silently log the error without showing an alert
+    }
+}
+
+// Add event listeners to clear red borders when user starts typing
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('input, select, textarea').forEach(input => {
+        input.addEventListener('input', function() {
+            this.style.borderColor = '';
+        });
+    });
+});
+
+/**
+ * Validates the NOSA form
+ * @returns {boolean} True if valid, false if invalid
+ */
+function validateNOSAForm() {
+    // First, remove any previous red borders
+    document.querySelectorAll('.form-control, .form-select, input, select, textarea').forEach(input => {
+        input.style.borderColor = '';
+    });
+    
+    const requiredFields = [
+        { id: 'salutation', name: 'Salutation' },
+        { id: 'personnel_name', name: 'Personnel Name' },
+        { id: 'personnel_position', name: 'Position' },
+        { id: 'personnel_office', name: 'Office' },
+        { id: 'current_date', name: 'Current Date' },
+        { id: 'adjusted_salary_date', name: 'Adjusted Salary Date' },
+        { id: 'adjusted_salary_amount', name: 'Adjusted Salary Amount' },
+        { id: 'actual_salary_date', name: 'Actual Salary Date' },
+        { id: 'actual_salary_amount', name: 'Actual Salary Amount' },
+        { id: 'adjusted_salary_grade', name: 'Adjusted Salary Grade' },
+        { id: 'adjusted_step', name: 'Adjusted Step' },
+        { id: 'actual_salary_grade', name: 'Actual Salary Grade' },
+        { id: 'actual_step', name: 'Actual Step' }
+    ];
+    
+    for (const field of requiredFields) {
+        const element = document.getElementById(field.id);
+        if (!element || !element.value.trim()) {
+            // Make the input field red instead of showing a message
+            if (element) {
+                // Add red border
+                element.style.borderColor = '#dc3545';
+                
+                // Focus on the element
+                element.focus();
+                
+                // Scroll to the element
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Add event listener to remove red border when user starts typing
+                element.addEventListener('input', function() {
+                    this.style.borderColor = '';
+                }, { once: true });
+            }
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+/**
+ * Generates and prints the NOSA document
+ */
+function generateAndPrintNOSA() {
+    try {
+        // Get form values
+        const salutation = document.getElementById('salutation').value;
+        const name = document.getElementById('personnel_name').value;
+        const position = document.getElementById('personnel_position').value;
+        const office = document.getElementById('personnel_office').value;
+        const currentDate = document.getElementById('current_date').value;
+        
+        // Get salary information
+        const adjustedSalaryDate = document.getElementById('adjusted_salary_date').value;
+        const adjustedSalaryAmount = document.getElementById('adjusted_salary_amount').value;
+        const actualSalaryDate = document.getElementById('actual_salary_date').value;
+        const actualSalaryAmount = document.getElementById('actual_salary_amount').value;
+        const adjustedSalaryGrade = document.getElementById('adjusted_salary_grade').value;
+        const adjustedStep = document.getElementById('adjusted_step').value;
+        const actualSalaryGrade = document.getElementById('actual_salary_grade').value;
+        const actualStep = document.getElementById('actual_step').value;
+
+        // Calculate monthly adjustment
+        const actualAmount = parseFloat(actualSalaryAmount.replace(/,/g, '')) || 0;
+        const adjustedAmount = parseFloat(adjustedSalaryAmount.replace(/,/g, '')) || 0;
+        const monthlyAdjustment = (adjustedAmount - actualAmount).toFixed(2);
+
+        // Format dates for display
+        const formatDate = (dateString) => {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        };
+
+        // Improved format currency function to ensure full number display
+        const formatCurrency = (amount) => {
+            // Convert to number and ensure it's valid
+            const numAmount = typeof amount === 'string' ? 
+                parseFloat(amount.replace(/,/g, '')) : 
+                parseFloat(amount);
+            
+            if (isNaN(numAmount)) return '0.00';
+            
+            // Format with commas and fixed decimal places
+            return numAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        };
+
+        // Determine adjustment type
+        const adjustmentType = actualSalaryGrade === adjustedSalaryGrade ? "Step Increment" : "Salary Standardization";
+
+        // Get current fiscal year
+        const fiscalYear = new Date().getFullYear();
+
+        console.log("Creating print window...");
+        
+        // Create a new window for printing
+        const printWindow = window.open('', '_blank', 'height=800,width=800');
+        
+        if (!printWindow) {
+            console.error("Failed to open print window - check if pop-up blocker is enabled");
+            alert("Could not open print window. Please disable pop-up blocker and try again.");
+            return;
+        }
+        
+        // Write the HTML content to the new window
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Notice of Salary Adjustment - ${name}</title>
+                <style>
+                    body {
+                        font-family: 'Times New Roman', Times, serif;
+                        font-size: 13.5px;
+                        line-height: 1.5;
+                        margin: 0.7in;
+                    }
+                    .letterhead {
+                        font-weight: bold;
+                        margin-bottom: 20px;
+                    }
+                    .letterhead > div > div {
+                        text-align: center;
+                        font-weight: bold;
+                    }
+                    .date-annex {
+                        text-align: right;
+                        margin-top: 30px;
+                    }
+                    .to {
+                        margin-top: 40px;
+                    }
+                    .subject {
+                        text-align: center;
+                        font-weight: bold;
+                        text-decoration: underline;
+                        margin-top: 30px;
+                        margin-bottom: 30px;
+                    }
+                    .content {
+                        text-align: justify;
+                    }
+                    .indent {
+                        text-indent: 40px;
+                    }
+                    .salary-table {
+                        margin-top: 15px;
+                        margin-left: 40px;
+                        width: 100%;
+                        table-layout: fixed;
+                    }
+                    .salary-table td {
+                        padding: 3px 10px;
+                        vertical-align: top;
+                    }
+                    .salary-table td:first-child {
+                        width: 20px;
+                    }
+                    .salary-table td:last-child {
+                        width: 150px;
+                        white-space: nowrap;
+                    }
+                    .amount {
+                        white-space: nowrap;
+                    }
+                    .signatory {
+                        margin-top: 60px;
+                    }
+                    .very-truly {
+                        margin-top: 20px;
+                    }
+                    .position-info {
+                        position: absolute;
+                        left: 50px;
+                        bottom: 60px;
+                        font-size: 13px;
+                    }
+                    .btn-container {
+                        text-align: center;
+                        margin: 20px 0;
+                    }
+                    .btn-print {
+                        background-color: #28a745;
+                        color: white;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-size: 16px;
+                    }
+                    @media print {
+                        .no-print {
+                            display: none !important;
+                        }
+                        @page {
+                            size: letter portrait;
+                            margin: 0;
+                        }
+                        /* Remove browser's default header and footer */
+                        body { 
+                            margin: 0.7in; 
+                        }
+                        
+                        /* Hide URL, page numbers, date etc. */
+                        @page :left {
+                            margin-left: 0;
+                            margin-right: 0;
+                        }
+                        @page :right {
+                            margin-left: 0;
+                            margin-right: 0;
+                        }
+                        @page :first {
+                            margin-top: 0;
+                            margin-bottom: 0;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+<div class="letterhead">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+        <img src="/images/Municipal Logo of Magallanes.png" alt="Municipal Logo" style="height: 80px; margin-right: 2px;">
+        
+        <div style="text-align: center; flex-grow: 1; padding: 0 5px;">
+            Republic of the Philippines<br>
+            Caraga Administrative Region<br>
+            <strong>PROVINCE OF AGUSAN DEL NORTE</strong><br>
+            <strong>MUNICIPALITY OF MAGALLANES</strong><br><br>
+            <strong>OFFICE OF THE MUNICIPAL MAYOR</strong>
+        </div>
+       <div style="text-align: center;">
+    <img src="/images/bitaug.jpg" alt="Bitaug Logo" style="height: 80px; margin-left: 2px;">
+</div>
+
+        </div>
+        <div class="to" style="border-bottom: 2px solid black; padding-bottom: 4px; margin-top: 15px;">
+</div>
+<div class="date-annex" contenteditable="true">
+    Annex "B-1"
+</div>
+
+<div class="subject" contenteditable="true">
+    NOTICE OF SALARY ADJUSTMENT<br>(${adjustmentType})
+</div>
+
+                 <div style="text-align: right;">${formatDate(currentDate)}</div>
+</div>
+
+   <strong style="text-decoration: underline;" contenteditable="true">${salutation} ${name},</strong><br>
+    <span style="text-decoration: underline;"> Magallanes, Agusan del Norte</span><br>
+</div>
+<div>
+<br>
+<strong contenteditable="true">Dear ${salutation} ${name.split(' ').pop()},</strong><br><br>
+</div>
+
+
+                <div class="content">
+                   <p class="indent" contenteditable="true">
+    Pursuant to Local Budget Circular No. 160 dated August 12, 2022 implementing Executive Order No. 64 dated August 2, 2024, your salary is hereby adjusted effective ${formatDate(adjustedSalaryDate)} as follows:
+</p>
+
+
+                    <table class="salary-table">
+    <tr>
+        <td>1.</td>
+        <td>
+            Adjusted monthly basic salary effective 
+            <strong contenteditable="true">${formatDate(adjustedSalaryDate)}</strong> 
+            under the new Salary Schedule, SG 
+            <strong style="text-decoration: underline;" contenteditable="true">${adjustedSalaryGrade}</strong> 
+            Step 
+            <strong style="text-decoration: underline;" contenteditable="true">${adjustedStep}</strong>:
+        </td>
+        <td>
+            <strong style="text-decoration: underline;" contenteditable="true"><span class="amount">P&nbsp;${formatCurrency(adjustedSalaryAmount)}</span></strong>
+        </td>
+    </tr>
+    <tr>
+        <td>2.</td>
+        <td>
+            Actual monthly basic salary as of 
+            <strong contenteditable="true">${formatDate(actualSalaryDate)}</strong> 
+            under the Salary Schedule, SG 
+            <strong style="text-decoration: underline;" contenteditable="true">${actualSalaryGrade}</strong> 
+            Step 
+            <strong style="text-decoration: underline;" contenteditable="true">${actualStep}</strong>:
+        </td>
+        <td>
+            <strong style="text-decoration: underline;" contenteditable="true"><span class="amount">P&nbsp;${formatCurrency(actualSalaryAmount)}</span></strong>
+        </td>
+    </tr>
+    <tr>
+        <td>3.</td>
+       <td contenteditable="true">
+    Monthly salary adjustment effective <strong>${formatDate(adjustedSalaryDate)}</strong>:
+</td>
+        <td>
+            <strong style="text-decoration: underline;" contenteditable="true"><span class="amount">P&nbsp;${formatCurrency(monthlyAdjustment)}</span></strong>
+        </td>
+    </tr>
+</table>
+
+
+                    <p class="indent" contenteditable="true">
+    It is understood that this salary adjustment is subject to usual accounting and auditing rules and regulations, and to appropriate readjustment and refund if found not in order.
+</p>
+                </div>
+
+<div class="very-truly" style="margin-top: 20px; text-align: right; padding-right: 100px;">
+    Very truly yours, 
+</div>
+
+<div class="signatory" style="margin-top: 10px; text-align: right; padding-right: 40px;">
+    <strong contenteditable="true">CESAR C. CUMBA, JR.</strong><br> 
+    <div style="padding-right: 35px;" contenteditable="true">Municipal Mayor</div>
+</div>
+
+
+
+<div class="position-info" style="margin-top: 10px;">
+    Position Title: <strong style="text-decoration: underline;">${position}</strong><br>
+    Salary Grade: <strong style="text-decoration: underline;" contenteditable="true">${actualSalaryGrade}</strong><br>
+    Item No.: <strong style="text-decoration: underline;"  contenteditable="true">Enter Item No.</strong>, FY: <strong style="text-decoration: underline;">${fiscalYear}</strong>, Plantilla of Personnel: <strong style="text-decoration: underline;">CY ${fiscalYear}</strong>
+</div>
+
+
+
+                <div class="btn-container no-print">
+                    <button type="button" class="btn-print" onclick="window.print(); window.close();">
+                        Print NOSA
+                    </button>
+                </div>
+                
+                <script>
+                    // This script helps ensure the browser doesn't show headers/footers
+                    document.title = " "; // Empty title to avoid showing in header
+                </script>
+            </body>
+            </html>
+        `);
+        
+        printWindow.document.close();
+        
+        // Wait for resources to load before focusing the window
+        printWindow.onload = function() {
+            console.log("Print window loaded successfully");
+            printWindow.focus();
+        };
+    } catch (error) {
+        console.error("Error in generateAndPrintNOSA function:", error);
+        // Silently log the error without showing an alert
+    }
+}
+// Add this at the end of your file
+document.addEventListener('DOMContentLoaded', function() {
+    // Log when inputs receive focus
+    document.querySelectorAll('input, select, textarea').forEach(input => {
+        input.addEventListener('focus', function() {
+            console.log('Input focused:', this.id);
+        });
+        
+        // Ensure inputs are not read-only unless they should be
+        if (input.id !== 'personnel_name' && 
+            input.id !== 'personnel_position' && 
+            input.id !== 'personnel_office' && 
+            input.id !== 'current_date') {
+            input.readOnly = false;
+        }
+        
+        // Log input changes
+        input.addEventListener('input', function() {
+            console.log('Input changed:', this.id, 'Value:', this.value);
+        });
+    });
+    
+    // Check for any overlays that might block input
+    const overlays = document.querySelectorAll('.modal-backdrop, .overlay');
+    overlays.forEach(overlay => {
+        console.log('Potential overlay found:', overlay);
+    });
+});

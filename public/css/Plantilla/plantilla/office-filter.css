@@ -1,0 +1,61 @@
+.office-filter-container {
+    position: relative;
+    min-width: 200px;
+}
+
+.office-filter-container select {
+    padding-right: 2.5rem;
+}
+
+.office-filter-container .refresh-button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.375rem 0.75rem;
+    color: #6c757d;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.office-filter-container .refresh-button:hover {
+    color: #0d6efd;
+}
+
+.office-filter-container .refresh-button:disabled {
+    color: #adb5bd;
+    cursor: not-allowed;
+}
+
+/* Style for the refresh option in the dropdown */
+.refresh-option {
+    color: #0d6efd;
+    font-weight: 500;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    padding: 8px 12px;
+}
+
+/* Add a separator line above and below the refresh option */
+.refresh-option::before {
+    content: "";
+    display: block;
+    height: 1px;
+    background-color: #dee2e6;
+    margin: -8px -12px 8px -12px;
+}
+
+.refresh-option::after {
+    content: "";
+    display: block;
+    height: 1px;
+    background-color: #dee2e6;
+    margin: 8px -12px -8px -12px;
+}
+
+/* Hover effect for the refresh option */
+.refresh-option:hover {
+    background-color: #e9ecef;
+} 

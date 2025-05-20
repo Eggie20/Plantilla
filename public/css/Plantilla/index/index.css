@@ -1,0 +1,143 @@
+.content-wrapper {
+    height: calc(100vh - 60px);
+    margin: 0;
+    padding: 0rem;
+}
+
+.content-container {
+    height: 100%;
+}
+
+.table-responsive {
+    height: calc(100vh - 250px);
+}
+
+.table {
+    margin-bottom: 0;
+    width: auto;  /* Changed from 100% to auto to prevent stretching */
+}
+
+.table th {
+    white-space: nowrap;
+    background-color: #f8f9fa;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 0.5rem;
+    font-size: 10px;  /* Added font size */
+}
+
+.table td {
+    white-space: nowrap;
+    padding: 0.4rem 0.5rem;
+    vertical-align: middle;
+    font-size: 10px;  /* Added font size */
+}
+
+.table th, .table td {
+    min-width: 80px;  /* Set minimum width for columns */
+}
+
+/* Specific column widths */
+.table th:nth-child(1), .table td:nth-child(1) { min-width: 150px; }  /* Office */
+.table th:nth-child(2), .table td:nth-child(2) { min-width: 80px; }   /* Item No. */
+.table th:nth-child(3), .table td:nth-child(3) { min-width: 150px; }  /* Position */
+.table th:nth-child(4), .table td:nth-child(4) { min-width: 50px; }   /* SG */
+.table th:nth-child(5), .table td:nth-child(5) { 
+    width: 61px;
+    min-width: 61px;
+    max-width: 80px;
+}  /* Auth. Salary */
+.table th:nth-child(6), .table td:nth-child(6) { 
+    width: 61px;
+    min-width: 61px;
+    max-width: 80px;
+}  /* Actual Salary */
+.table th:nth-child(7), .table td:nth-child(7) { min-width: 50px; }   /* Step */
+.table th:nth-child(8), .table td:nth-child(8) { min-width: 70px; }   /* Code */
+.table th:nth-child(9), .table td:nth-child(9) { min-width: 100px; }  /* Type */
+.table th:nth-child(10), .table td:nth-child(10) { min-width: 70px; } /* Level */
+.table th:nth-child(11), .table td:nth-child(11) { min-width: 100px; }/* Last Name */
+.table th:nth-child(12), .table td:nth-child(12) { min-width: 100px; }/* First Name */
+.table th:nth-child(13), .table td:nth-child(13) { min-width: 100px; }/* Middle Name */
+.table th:nth-child(14), .table td:nth-child(14) { min-width: 100px; }/* Date of Birth */
+.table th:nth-child(15), .table td:nth-child(15) { min-width: 120px; }/* Original Appointment */
+.table th:nth-child(16), .table td:nth-child(16) { min-width: 100px; }/* Last Promotion */
+.table th:nth-child(17), .table td:nth-child(17) { min-width: 100px; }/* Status */
+.table th:nth-child(18), .table td:nth-child(18) { min-width: 60px; } /* Action */
+
+.filter-section {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.search-container {
+    max-width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .filter-section .row {
+        margin-bottom: -0.5rem;
+    }
+    
+    .filter-section .col-12 {
+        margin-bottom: 0.5rem;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .card-header .d-flex {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* Custom scrollbar */
+.table-responsive::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Table container shadow indicators */
+.table-responsive {
+    position: relative;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+.table-responsive::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 15px;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05));
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.table-responsive.has-overflow::after {
+    opacity: 1;
+}

@@ -1,0 +1,16 @@
+.search-container {
+    margin-bottom: 15px;
+}
+
+#personnelSearch:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+}
+
+.input-group-text {
+    border-right: none;
+}
+
+#personnelSearch {
+    border-left: none;
+}

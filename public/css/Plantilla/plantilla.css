@@ -1,0 +1,656 @@
+/* Plantilla System - Modern CSS Redesign */
+
+/* Global Variables */
+:root {
+  --primary-color: #4f46e5; /* Indigo 600 */
+  --primary-hover: #4338ca; /* Indigo 700 */
+  --secondary-color: #6b7280; /* Gray 500 */
+  --success-color: #10b981; /* Emerald 500 */
+  --warning-color: #f59e0b; /* Amber 500 */
+  --danger-color: #ef4444; /* Red 500 */
+  --light-color: #f9fafb; /* Gray 50 */
+  --dark-color: #111827; /* Gray 900 */
+  --border-color: #e5e7eb; /* Gray 200 */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --radius-sm: 0.125rem;
+  --radius: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Base Styles */
+body {
+  font-family: var(--font-sans);
+  color: var(--dark-color);
+  background-color: #f3f4f6;
+  line-height: 1.5;
+}
+
+.container-fluid {
+  position: relative;
+  overflow: visible;
+  padding: 1.5rem;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--dark-color);
+  margin-bottom: 1rem;
+}
+
+/* Cards */
+.card {
+  background-color: #fff;
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.card-header {
+  background-color: #fff;
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 1.25rem;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+/* Buttons */
+.btn {
+  font-weight: 500;
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-success {
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+}
+
+.btn-warning {
+  background-color: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Forms */
+.form-control, .form-select {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(79, 70, 229, 0.25);
+}
+
+/* Tables */
+.table {
+  width: 100%;
+  margin-bottom: 0;
+  color: var(--dark-color);
+  vertical-align: top;
+  border-color: var(--border-color);
+  font-size: 0.85rem;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: 70vh; /* Limit height to 70% of viewport height */
+  scrollbar-width: thin; /* For Firefox */
+}
+
+/* Custom scrollbar styling for webkit browsers */
+.table-responsive::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(79, 70, 229, 0.05);
+}
+
+.table-bordered {
+  border: 1px solid var(--border-color);
+}
+
+.table-sm td, .table-sm th {
+  padding: 0.25rem 0.4rem;
+  white-space: nowrap;
+}
+
+.table-responsive > .table > thead > tr > th {
+  color: var(--dark-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #f8fafc;
+  text-align: center;
+  font-size: 0.7rem;
+  padding: 0.6rem 0.4rem;
+  border-bottom: 2px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.table-responsive > .table > tbody > tr > td {
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 150px; /* Limit cell width */
+  padding: 0.5rem 0.4rem;
+  transition: background-color 0.2s ease;
+  text-align: center;
+  font-size: 0.8rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Add tooltip-like behavior for truncated cells */
+.table-responsive > .table > tbody > tr > td:hover {
+  overflow: visible;
+  white-space: normal;
+  word-break: break-word;
+  background-color: #f8fafc;
+  position: relative;
+  z-index: 1;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Alternating row colors for better readability */
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: rgba(249, 250, 251, 0.7);
+}
+
+/* Compact view for smaller screens */
+@media (max-width: 1200px) {
+  .table-responsive > .table > thead > tr > th,
+  .table-responsive > .table > tbody > tr > td {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.3rem;
+  }
+  
+  .table-responsive > .table > tbody > tr > td {
+    max-width: 120px;
+  }
+}
+
+/* Alerts */
+.alert {
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+}
+
+.alert-success {
+  color: #0f766e;
+  background-color: #d1fae5;
+  border-color: #a7f3d0;
+}
+
+.alert-danger {
+  color: #b91c1c;
+  background-color: #fee2e2;
+  border-color: #fecaca;
+}
+
+.alert-info {
+  color: #1e40af;
+  background-color: #dbeafe;
+  border-color: #bfdbfe;
+}
+
+.alert-warning {
+  color: #92400e;
+  background-color: #fef3c7;
+  border-color: #fde68a;
+}
+
+/* Modals */
+.modal-content {
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 1.5rem;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 1rem 1.5rem;
+}
+
+.modal-title {
+  font-weight: 600;
+}
+
+div.modal-dialog.modal-lg {
+  max-width: 78%;
+}
+
+/* Search Container */
+.search-container {
+  max-width: 400px;
+  margin-left: auto;
+}
+
+.search-wrapper {
+  position: relative;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+}
+
+.search-icon {
+  color: var(--secondary-color);
+  margin-right: 0.5rem;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  background: transparent;
+}
+
+.search-input:focus {
+  box-shadow: none;
+}
+
+.btn-clear {
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  cursor: pointer;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  z-index: 1050 !important;
+  border: none;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius);
+  padding: 0.5rem 0;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+  background-color: rgba(79, 70, 229, 0.05);
+  color: var(--primary-color);
+}
+
+/* Sidebar */
+.bg-indigo-800 {
+  background-color: var(--primary-color) !important;
+}
+
+.border-indigo-700 {
+  border-color: var(--primary-hover) !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .d-flex.justify-content-left {
+    flex-wrap: wrap;
+  }
+  
+  .search-container {
+    max-width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .form-select, .btn {
+    margin-bottom: 0.5rem;
+  }
+  
+  div.modal-dialog.modal-lg {
+    max-width: 95%;
+  }
+}
+
+/* No Results Message */
+.no-results {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--light-color);
+  border-radius: var(--radius);
+  color: var(--secondary-color);
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+/* Row Spacing */
+.row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 1rem !important;
+}
+
+/* Button Group */
+.btn-group .btn {
+  border-radius: var(--radius);
+}
+
+/* Print Button */
+button#savePositionBtn.btn.btn-success {
+  width: auto;
+  min-width: 130px;
+}
+
+/* entries */
+.dataTables_length {
+  text-align: left;
+  width: 157px;
+  margin-left: 10px;
+}
+
+.dataTables_length label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.dataTables_footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.dataTables_paginate {
+  text-align: left;
+  margin-right: 5px;
+}
+
+.separator {
+  margin: 0 10px;
+}
+
+.dataTables_info {
+  text-align: right;
+  flex-grow: 1;
+}
+
+.dataTables_paginate button {
+  margin-left: 5px;
+}
+
+select.form-select.form-select-sm {
+  left: 1px;
+  position: relative;
+}
+
+nav.navbar.navbar-expand-lg.navbar-dark {
+  top: -24px;
+}
+
+body.modal-open {
+  overflow: hidden;
+  padding-right: 0px;
+}
+
+a.btn.btn-secondary.mt-3 {
+  margin-top: 0rem !important;
+}
+
+#personnelTableContainer {
+  display: none;
+}
+
+.skeleton-loader {
+  display: block;
+}
+
+#personnelTableContainer {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.loaded #personnelTableContainer {
+  opacity: 1;
+}
+
+.table-hover>tbody>tr:hover,
+.table>tbody>tr:hover {
+  transform: none !important;
+}
+
+p#noDataMessage{
+  font-size: larger;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  size: revert-layer;
+}
+
+.edit-btn {
+  cursor: pointer;
+}
+
+button.btn.btn-info {
+  background-color: #adb5bd !important;
+  color: #fff;
+  border-color: #adb5bd;
+}
+
+button.btn.btn-warning {
+  background-color: #FFEB3B !important;
+  color: #000;
+  border-color: #FFEB3B;
+}
+
+button#saveOfficeBtn.btn.btn-success{
+  width: 120px;
+}
+
+button#savePositionBtn.btn.btn-success{
+  width: 131px;
+}
+
+button.btn.btn-primary {
+  width: 193px;
+}
+
+a.btn.btn-primary{
+  width: 224px;
+}
+
+button#vacantButton.btn.btn-secondary {
+  left: 10px;
+  position: relative;
+}
+
+ul.pagination {
+  padding-left: 17px;
+}
+
+.dropdown-menu {
+    z-index: 1050 !important;
+    /* Ensure dropdown appears on top */
+}
+
+.container-fluid {
+    position: relative;
+    /* Prevents dropdown from being cut off */
+    overflow: visible;
+    /* Ensures dropdown is visible */
+}
+
+.table-responsive>.table>thead>tr>th {
+    color: black;
+    font-weight: 1000px;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-size: 9px;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.table-responsive>.table>tbody>tr>td {
+    vertical-align: middle;
+    text-overflow: clip;
+    overflow-wrap: break-word;
+    max-width: none;
+    width: auto;
+    padding: 4px;
+    transition: 0.3s;
+    overflow: visible;
+    white-space: normal;
+    text-align: center;
+}
+
+div.modal-dialog.modal-lg {
+    max-width: 78%;
+}
+
+.row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 14px !important;
+    /* Force override */
+}
+
+div.modal-content {
+    top: 20px !important;
+    /* Force override */
+    bottom: 20px !important;
+    /* Force override */
+
+}
+
+th {
+    font-weight: 1000px !important;
+}
+
+/* scrolling */
+
+.table-responsive {
+    max-height: 400px;
+    /* Set a fixed height for the scrollable area */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    overflow-x: auto;
+    /* Enable horizontal scrolling if needed */
+    border-radius: 8px;
+    /* Optional for smooth edges */
+}
+
+/* Fix table headers when scrolling */
+.table thead th {
+    position: sticky;
+    top: 0;
+    background: white;
+    /* Keeps the header visible */
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Prevent table data from wrapping */
+.table td,
+.table th {
+    white-space: nowrap;
+}
+
+.container-fluid.py-4 {
+    margin-top: -44px;
+    /* Moves the entire section upwards */
+}
+
+.d-flex.justify-content-left.gap-2.mb-4 {
+    margin-bottom: 0;
+    /* Reduces extra spacing below the filter section */
+}
+
+select#statusFilter.form-select {
+    width: 30% !important;
+}
+
+select#officeFilter.form-select {
+    width: 38% !important;
+}
+
+select#positionDropdown.form-select {
+    width: 50% !important;
+}
